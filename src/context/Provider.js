@@ -4,15 +4,14 @@ import fetchPlanets from '../services/fetchStarWarsApi';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
+  const [data, setData] = useState([]);
   const context = {
-    planets,
-    setPlanets,
-    fetchPlanets,
+    data,
+    setData,
   };
   useEffect(() => {
     (async () => {
-      setPlanets(await fetchPlanets());
+      setData(await fetchPlanets().then(({ results }) => results));
     })();
   }, []);
   return (

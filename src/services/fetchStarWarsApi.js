@@ -3,7 +3,7 @@ async function fetchPlanets() {
   try {
     const resolve = await fetch(url);
     const data = await resolve.json();
-    return data.results;
+    return data;
   } catch (err) {
     return err;
   }
