@@ -3,6 +3,10 @@
   margin: 0;
 }
 
+select, input, button {
+  color: rgb(17, 7, 63);
+}
+
 .App {
 
   /* background-image: url('./images/space-jeremy-perkins.jpg'); */
