@@ -1,17 +1,36 @@
+* {
+  color: rgb(226, 226, 226);
+  margin: 0;
+}
+
 .App {
+
+  /* background-image: url('./images/space-jeremy-perkins.jpg'); */
+  background-color: rgb(17, 7, 63);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-around;
   text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+  width: 300px;
 }
 
 @media ( prefers-reduced-motion : no-preference ) {
 
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+    /* animation: App-logo-spin infinite 20s linear; */
   }
+}
+
+.App-main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 65vh;
 }
 
 .App-header {
@@ -29,7 +48,12 @@
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
+.App-table {
+  max-width: 90%;
+  min-width: 80%;
+}
+
+/* @keyframes App-logo-spin {
 
   from {
     transform: rotate(0deg);
@@ -38,4 +62,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
