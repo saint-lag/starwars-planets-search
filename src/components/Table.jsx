@@ -28,7 +28,7 @@ const Table = () => {
           <tr key={ planet.name }>
             <td key={ `${planet}-name` }>{planet.name}</td>
             <td key={ `${planet}-rotation_period` }>{planet.rotation_period}</td>
-            <td key={ `${planet}-orbital` }>{planet.orbital}</td>
+            <td key={ `${planet}-orbital_period` }>{planet.orbital_period}</td>
             <td key={ `${planet}-diameter` }>{planet.diameter}</td>
             <td key={ `${planet}-climate` }>{planet.climate}</td>
             <td key={ `${planet}-gravity` }>{planet.gravity}</td>
