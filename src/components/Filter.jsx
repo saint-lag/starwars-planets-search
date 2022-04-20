@@ -7,6 +7,9 @@ function Filter() {
     filterByName,
     setFilterByNumericValues,
     filterByNumericValues,
+    currentNumericValues,
+    setCurrentNumericValues,
+    btnDisabled,
   } = useContext(AppContext);
   return (
     <section>
@@ -21,8 +24,8 @@ function Filter() {
         <label htmlFor="column-filter">
           Column
           <select
-            onChange={ ({ target }) => setFilterByNumericValues({
-              ...filterByNumericValues,
+            onChange={ ({ target }) => setCurrentNumericValues({
+              ...currentNumericValues,
               column: target.value,
             }) }
             id="column-filter"
@@ -35,8 +38,8 @@ function Filter() {
         <label htmlFor="comparison-filter">
           Operator
           <select
-            onChange={ ({ target }) => setFilterByNumericValues({
-              ...filterByNumericValues,
+            onChange={ ({ target }) => setCurrentNumericValues({
+              ...currentNumericValues,
               comparison: target.value,
             }) }
             id="comparison-filter"
@@ -48,22 +51,21 @@ function Filter() {
           </select>
         </label>
         <input
-          onChange={ ({ target }) => setFilterByNumericValues({
-            ...filterByNumericValues,
+          onChange={ ({ target }) => setCurrentNumericValues({
+            ...currentNumericValues,
             value: target.value,
           }) }
           data-testid="value-filter"
         />
         <button
-          onClick={ () => setFilterByNumericValues({
-            ...filterByNumericValues,
-            filter: true,
-          }) }
+          onClick={ () => setFilterByNumericValues([
+            ...filterByNumericValues, currentNumericValues,
+          ]) }
           disabled={
-            filterByNumericValues.btnDisabled([
-              filterByNumericValues.column,
-              filterByNumericValues.value,
-              filterByNumericValues.comparison,
+            btnDisabled([
+              currentNumericValues.column,
+              currentNumericValues.value,
+              currentNumericValues.comparison,
             ])
           }
           id="button-filter"
