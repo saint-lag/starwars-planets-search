@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanets from '../services/fetchStarWarsApi';
 import AppContext from './AppContext';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [planets, setPlanets] = useState([]);
+  const [load, setLoad] = useState(false);
+  const [error, setError] = useState('');
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [currentNumericValues, setCurrentNumericValues] = useState({
@@ -12,6 +15,9 @@ function Provider({ children }) {
   });
   const context = {
     data,
+    planets,
+    load,
+    error,
     setData,
     filterByName,
     setFilterByName,
@@ -21,23 +27,33 @@ function Provider({ children }) {
     setCurrentNumericValues,
     btnDisabled: (filters) => !filters.every((filter) => filter.length > 0),
   };
+
   useEffect(() => {
     (async () => {
       await fetchPlanets()
-        .then(({ results }) => setData(results));
+        .then(({ results }) => {
+          setData(results);
+          setPlanets(results);
+          setLoad(true);
+        })
+        .catch((err) => {
+          setError(err.message);
+          setLoad(true);
+        });
     })();
   }, []);
 
-  const handleNameFilter = useCallback(() => {
-    setData((filterByName.name !== ''
-      ? data.filter((result) => result.name.toUpperCase()
-        .includes(filterByName.name.toUpperCase()))
-      : data));
-  }, [data, filterByName.name]);
-
   useEffect(() => {
-    handleNameFilter();
-  }, [handleNameFilter]);
+    const handleNameFilter = () => setData(
+      filterByName.name !== ''
+        ? planets.filter((result) => result.name
+          .toUpperCase()
+          .includes(filterByName.name.toUpperCase()))
+        : planets,
+    );
+    return handleNameFilter();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterByName.name]);
 
   // useEffect(() => {
   //   const handleNumericValuesFilter = () => {
