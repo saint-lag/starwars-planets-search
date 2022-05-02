@@ -7,10 +7,13 @@ select, input, button {
   color: rgb(17, 7, 63);
 }
 
+body {
+  background-color: rgb(17, 7, 63);
+}
+
 .App {
 
   /* background-image: url('./images/space-jeremy-perkins.jpg'); */
-  background-color: rgb(17, 7, 63);
   display: flex;
   flex-direction: column;
   height: 100vh;

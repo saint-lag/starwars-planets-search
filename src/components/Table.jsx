@@ -3,7 +3,7 @@ import AppContext from '../context/AppContext';
 import '../App.css';
 
 const Table = () => {
-  const { data, load, error } = useContext(AppContext);
+  const { filteredData, load, error } = useContext(AppContext);
 
   if (load) {
     return (
@@ -30,7 +30,7 @@ const Table = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((planet) => (
+                {filteredData.map((planet) => (
                   <tr key={ planet.name }>
                     <td key={ `${planet}-name` }>{planet.name}</td>
                     <td key={ `${planet}-rotation_period` }>
