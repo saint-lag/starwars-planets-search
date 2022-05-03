@@ -3,6 +3,8 @@ import AppContext from '../context/AppContext';
 
 function Filter() {
   const {
+    data,
+    setFilteredData,
     setFilterByName,
     filterByName,
     setFilterByNumericValues,
@@ -18,7 +20,7 @@ function Filter() {
     'surface_water',
     'diameter',
   ]);
-  const clickHandler = () => {
+  const numericValuesClickHandler = () => {
     setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
     const currentNumericFilter = currentNumericValues.column;
     const newState = availableOptions
@@ -30,6 +32,15 @@ function Filter() {
     currentNumericValues: 
     ${currentNumericValues.column}, 
     ${currentNumericValues.comparison}`);
+  };
+  const removeNumericFilterClickHandler = (option) => {
+    setAvailableOptions([...availableOptions, option]);
+    const newState = filterByNumericValues.filter((obj) => obj.column !== option);
+    setFilterByNumericValues(newState);
+  };
+  const removeAllNumericFiltersClickHandler = () => {
+    setFilterByNumericValues([]);
+    setFilteredData(data);
   };
   return (
     <section>
@@ -88,7 +99,7 @@ function Filter() {
           data-testid="value-filter"
         />
         <button
-          onClick={ () => clickHandler() }
+          onClick={ () => numericValuesClickHandler() }
           disabled={
             btnDisabled([
               currentNumericValues.column,
@@ -106,12 +117,28 @@ function Filter() {
       <div className="numericValuesFilterContainer">
         {
           filterByNumericValues.length !== 0
-    && filterByNumericValues.map((obj, index) => (
-      <div key={ index } className="numericValueFilterAndDeleteBtnContainer">
-        <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
-        <button className="removeNumericFilterBtn" type="button">X</button>
-      </div>
-    ))
+    && (
+      <>
+        {filterByNumericValues.map((obj, index) => (
+          <div key={ index } className="numericValueFilterAndDeleteBtnContainer">
+            <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
+            <button
+              onClick={ (event) => removeNumericFilterClickHandler(event.target.value) }
+              className="removeNumericFilterBtn"
+              value={ obj.column }
+              type="button"
+            >
+              X
+            </button>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={ () => removeAllNumericFiltersClickHandler() }
+        >
+          REMOVE ALL
+        </button>
+      </>)
         }
       </div>
     </section>

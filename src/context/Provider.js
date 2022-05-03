@@ -19,6 +19,7 @@ function Provider({ children }) {
     load,
     error,
     filteredData,
+    setFilteredData,
     filterByName,
     setFilterByName,
     filterByNumericValues,
