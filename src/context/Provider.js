@@ -13,6 +13,9 @@ function Provider({ children }) {
   const [currentNumericValues, setCurrentNumericValues] = useState({
     column: 'population', comparison: 'maior que', value: '',
   });
+  const [columnSort, setColumnSort] = useState({
+    order: { column: 'population', sort: 'ASC' },
+  });
   const context = {
     data,
     setData,
@@ -26,6 +29,8 @@ function Provider({ children }) {
     setFilterByNumericValues,
     currentNumericValues,
     setCurrentNumericValues,
+    columnSort,
+    setColumnSort,
     btnDisabled: (filters) => !filters.every((filter) => filter.length > 0),
   };
 

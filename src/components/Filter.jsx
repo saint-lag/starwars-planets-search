@@ -13,6 +13,8 @@ function Filter() {
     currentNumericValues,
     setCurrentNumericValues,
     btnDisabled,
+    columnSort,
+    setColumnSort,
   } = useContext(AppContext);
   const [availableOptions, setAvailableOptions] = useState([
     { value: 'population', label: 'population' },
@@ -25,7 +27,7 @@ function Filter() {
     setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
     const currentNumericFilter = currentNumericValues.column;
     const newState = availableOptions
-      .filter((availableOption) => availableOption !== currentNumericFilter);
+      .filter((availableOption) => availableOption.value !== currentNumericFilter);
     setAvailableOptions(newState);
 
     // DEBUG:
@@ -57,13 +59,15 @@ function Filter() {
       <form>
         <p>Column</p>
         <Select
-          /* onChange={ ({ target }) => setCurrentNumericValues({
-            ...currentNumericValues,
-            column: target.value,
-          }) } */
+          onChange={ (value) => {
+            setCurrentNumericValues({
+              ...currentNumericValues,
+              column: value.value,
+            });
+          } }
           data-testid="column-filter"
           options={ availableOptions }
-          // defaultValue={ availableOptions[0] }
+          defaultValue={ availableOptions[availableOptions.length - 1] }
         />
         <label htmlFor="comparison-filter">
           Operator
@@ -113,7 +117,8 @@ function Filter() {
                 <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
                 <button
                   onClick={ (event) => (
-                    removeNumericFilterClickHandler(event.target.value)) }
+                    removeNumericFilterClickHandler(event.target.value)
+                  ) }
                   className="removeNumericFilterBtn"
                   value={ obj.column }
                   type="button"
@@ -130,6 +135,42 @@ function Filter() {
             </button>
           </>
         )}
+      </div>
+      <div className="columnSortContainer">
+        <select
+          id="column-sort"
+          data-testid="column-sort"
+          onChange={ ({ target: { value } }) => setColumnSort({
+            order: { ...columnSort.order, column: value },
+          }) }
+        >
+          <option value="population">population</option>
+          <option value="surface_water">surface_water</option>
+          <option value="diameter">diameter</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="rotational_period">rotational_period</option>
+        </select>
+        <label htmlFor="column-sort-asc">
+          ascendente
+          <input
+            id="column-sort-asc"
+            data-testid="column-sort-asc"
+            type="radio"
+            value="ASC"
+          />
+        </label>
+        <label htmlFor="column-sort-desc">
+          descendente
+          <input
+            id="column-sort-desc"
+            data-testid="column-sort-desc"
+            type="radio"
+            value="DESC"
+          />
+        </label>
+        <button type="button" data-testid="column-sort-button">
+          ordenar
+        </button>
       </div>
     </section>
   );
