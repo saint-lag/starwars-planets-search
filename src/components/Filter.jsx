@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 
 function Filter() {
@@ -11,10 +11,31 @@ function Filter() {
     setCurrentNumericValues,
     btnDisabled,
   } = useContext(AppContext);
+  const [availableOptions, setAvailableOptions] = useState([
+    'population',
+    'orbital_period',
+    'rotational_period',
+    'surface_water',
+    'diameter',
+  ]);
+  const clickHandler = () => {
+    setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
+    const currentNumericFilter = currentNumericValues.column;
+    const newState = availableOptions
+      .filter((availableOption) => availableOption !== currentNumericFilter);
+    setAvailableOptions(newState);
+
+    // DEBUG:
+    console.log(`availableOptions: ${availableOptions}; 
+    currentNumericValues: 
+    ${currentNumericValues.column}, 
+    ${currentNumericValues.comparison}`);
+  };
   return (
     <section>
       <h2>Search your Planet</h2>
       <input
+        type="text"
         onChange={ ({ target }) => setFilterByName({
           ...filterByName,
           name: target.value }) }
@@ -30,9 +51,17 @@ function Filter() {
             }) }
             id="column-filter"
             data-testid="column-filter"
+            defaultValue={ availableOptions[0] }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
+            {availableOptions
+              .map((availableOption, index) => (
+                <option
+                  key={ index }
+                  value={ availableOption }
+                >
+                  {availableOption}
+
+                </option>))}
           </select>
         </label>
         <label htmlFor="comparison-filter">
@@ -51,6 +80,7 @@ function Filter() {
           </select>
         </label>
         <input
+          type="number"
           onChange={ ({ target }) => setCurrentNumericValues({
             ...currentNumericValues,
             value: target.value,
@@ -58,9 +88,7 @@ function Filter() {
           data-testid="value-filter"
         />
         <button
-          onClick={ () => setFilterByNumericValues([
-            ...filterByNumericValues, currentNumericValues,
-          ]) }
+          onClick={ () => clickHandler() }
           disabled={
             btnDisabled([
               currentNumericValues.column,
@@ -75,6 +103,17 @@ function Filter() {
           Filtrar
         </button>
       </form>
+      <div className="numericValuesFilterContainer">
+        {
+          filterByNumericValues.length !== 0
+    && filterByNumericValues.map((obj, index) => (
+      <div key={ index } className="numericValueFilterAndDeleteBtnContainer">
+        <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
+        <button className="removeNumericFilterBtn" type="button">X</button>
+      </div>
+    ))
+        }
+      </div>
     </section>
   );
 }

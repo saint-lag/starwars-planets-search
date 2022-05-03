@@ -70,3 +70,23 @@ body {
     transform: rotate(360deg);
   }
 } */
+
+.numericValuesFilterContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.numericValueFilterAndDeleteBtnContainer {
+  align-items: space-around;
+  display: flex;
+  flex-direction: row;
+}
+
+.removeNumericFilterBtn {
+  background-color: darkblue;
+  border-radius: 50%;
+  color: yellow;
+
+  /* stylelint-disable-next-line font-weight-notation */
+  font-weight: bold;
+}
