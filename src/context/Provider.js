@@ -92,6 +92,11 @@ function Provider({ children }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByNumericValues]);
 
+  useEffect(() => {
+    console.log(columnSort);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [columnSort]);
+
   return (
     <AppContext.Provider value={ context }>
       {children}

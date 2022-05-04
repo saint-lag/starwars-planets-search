@@ -1,5 +1,4 @@
 * {
-  color: rgb(226, 226, 226);
   margin: 0;
 }
 
@@ -12,8 +11,6 @@ body {
 }
 
 .App {
-
-  /* background-image: url('./images/space-jeremy-perkins.jpg'); */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -55,7 +52,12 @@ body {
   color: #61dafb;
 }
 
+.App-filter-section {
+  color: rgb(226, 226, 226);
+}
+
 .App-table {
+  color: rgb(226, 226, 226);
   max-width: 90%;
   min-width: 80%;
 }
