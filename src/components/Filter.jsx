@@ -29,6 +29,7 @@ function Filter() {
   };
   const removeNumericFilterClickHandler = (option) => {
     const newState = filterByNumericValues.filter((obj) => obj.column !== option);
+    setFilteredData(data);
     setFilterByNumericValues(newState);
     setAvailableOptions([...availableOptions, { value: option, label: option }]);
   };
@@ -141,7 +142,7 @@ function Filter() {
           <option value="surface_water">surface_water</option>
           <option value="diameter">diameter</option>
           <option value="orbital_period">orbital_period</option>
-          <option value="rotational_period">rotational_period</option>
+          <option value="rotation_period">rotation_period</option>
         </select>
         <div
           className="columnSort"
