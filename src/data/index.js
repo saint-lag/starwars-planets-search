@@ -6,6 +6,18 @@ const AVAILABLE_OPTIONS = [
   { value: 'diameter', label: 'diameter' },
 ];
 
-const NOTHING_AT_ALL = 'NOTHING, AT ALL';
+const REACT_SELECT_STYLES = {
+  option: (provided, state) => ({
+    ...provided,
+    borderBottom: '1px dotted pink',
+    color: state.isSelected ? 'red' : 'blue',
+    padding: 20,
+  }),
+  control: () => ({
+    // none of react-select's styles are passed to <Control />
+    width: 400,
+    backgroundColor: 'white',
+  }),
+};
 
-export { AVAILABLE_OPTIONS, NOTHING_AT_ALL };
+export { AVAILABLE_OPTIONS, REACT_SELECT_STYLES };

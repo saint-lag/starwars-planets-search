@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import Select from 'react-select';
 import AppContext from '../context/AppContext';
-import { AVAILABLE_OPTIONS } from '../data';
+import { AVAILABLE_OPTIONS, REACT_SELECT_STYLES } from '../data';
 
 function Filter() {
   const {
@@ -60,6 +60,7 @@ function Filter() {
           data-testid="column-filter"
           options={ availableOptions }
           defaultValue={ availableOptions[0] }
+          styles={ REACT_SELECT_STYLES }
         />
         <label htmlFor="comparison-filter">
           Operator
