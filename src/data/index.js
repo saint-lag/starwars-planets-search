@@ -1,3 +1,4 @@
+// React-select:
 const AVAILABLE_OPTIONS = [
   { value: 'population', label: 'population' },
   { value: 'orbital_period', label: 'orbital_period' },
@@ -5,7 +6,6 @@ const AVAILABLE_OPTIONS = [
   { value: 'surface_water', label: 'surface_water' },
   { value: 'diameter', label: 'diameter' },
 ];
-
 const REACT_SELECT_STYLES = {
   option: (provided, state) => ({
     ...provided,
@@ -20,4 +20,13 @@ const REACT_SELECT_STYLES = {
   }),
 };
 
-export { AVAILABLE_OPTIONS, REACT_SELECT_STYLES };
+// Non React-select:
+const AVAILABLE_OPTIONS_ARRAY = [
+  'population',
+  'orbital_period',
+  'rotation_period',
+  'surface_water',
+  'diameter',
+];
+
+export { AVAILABLE_OPTIONS, REACT_SELECT_STYLES, AVAILABLE_OPTIONS_ARRAY };

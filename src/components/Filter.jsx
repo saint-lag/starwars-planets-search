@@ -1,7 +1,9 @@
 import React, { useContext, useState } from 'react';
-import Select from 'react-select';
 import AppContext from '../context/AppContext';
-import { AVAILABLE_OPTIONS, REACT_SELECT_STYLES } from '../data';
+import { AVAILABLE_OPTIONS_ARRAY } from '../data';
+// React-select:
+// import Select from 'react-select';
+// import { AVAILABLE_OPTIONS, REACT_SELECT_STYLES } from '../data';
 
 function Filter() {
   const {
@@ -16,7 +18,11 @@ function Filter() {
     btnDisabled,
     setColumnSort,
   } = useContext(AppContext);
-  const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS);
+
+  // React-select:
+  // const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS);
+
+  const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS_ARRAY);
   const [currentColumnSort, setCurrentColumnSort] = useState({
     order: { column: 'population', sort: 'ASC' } });
 
@@ -36,7 +42,7 @@ function Filter() {
   const removeAllNumericFiltersClickHandler = () => {
     setFilterByNumericValues([]);
     setFilteredData(data);
-    setAvailableOptions(AVAILABLE_OPTIONS);
+    setAvailableOptions(AVAILABLE_OPTIONS_ARRAY);
   };
   return (
     <section className="App-filter-section">
@@ -51,7 +57,8 @@ function Filter() {
       />
       <form>
         <p>Column</p>
-        <Select
+        {/* // Tests won't get Select through data-testid
+         <Select
           onChange={ (value) => {
             setCurrentNumericValues({
               ...currentNumericValues,
@@ -62,7 +69,25 @@ function Filter() {
           options={ availableOptions }
           defaultValue={ availableOptions[0] }
           styles={ REACT_SELECT_STYLES }
-        />
+        /> */}
+        {/* TODO: select with dinamic mapping availableOptions  */}
+        <select
+          onChange={ ({ target: { value } }) => {
+            setCurrentNumericValues({
+              ...currentNumericValues,
+              column: value,
+            });
+          } }
+          data-testid="column-filter"
+          defaultValue={ availableOptions[0] }
+          className="columnFilterSelect"
+        >
+          {availableOptions.map((availableOption, index) => (
+            <option key={ `column-filter-option-${index}` }>
+              {availableOption}
+            </option>
+          ))}
+        </select>
         <label htmlFor="comparison-filter">
           Operator
           <select
@@ -110,8 +135,7 @@ function Filter() {
               >
                 <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
                 <button
-                  onClick={ (event) => (
-                    removeNumericFilterClickHandler(event.target.value)) }
+                  onClick={ (event) => removeNumericFilterClickHandler(event.target.value) }
                   className="removeNumericFilterBtn"
                   value={ obj.column }
                   type="button"
