@@ -19,13 +19,39 @@ function Filter() {
     setColumnSort,
   } = useContext(AppContext);
 
-  // React-select:
-  // const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS);
-
+  // Not React-select:
   const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS_ARRAY);
   const [currentColumnSort, setCurrentColumnSort] = useState({
     order: { column: 'population', sort: 'ASC' } });
 
+  const numericValuesClickHandler = () => {
+    setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
+    const currentNumericFilter = currentNumericValues.column;
+    const newState = availableOptions.filter(
+      (availableOption) => availableOption !== currentNumericFilter,
+    );
+    setAvailableOptions(newState);
+  };
+  const removeNumericFilterClickHandler = (option) => {
+    const newState = filterByNumericValues.filter(
+      (obj) => obj.column !== option,
+    );
+    setFilteredData(data);
+    setFilterByNumericValues(newState);
+    setAvailableOptions([
+      ...availableOptions,
+      option,
+    ]);
+  };
+  const removeAllNumericFiltersClickHandler = () => {
+    setFilterByNumericValues([]);
+    setFilteredData(data);
+    setAvailableOptions(AVAILABLE_OPTIONS_ARRAY);
+  };
+
+  // React-select:
+  // const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS);
+  /*
   const numericValuesClickHandler = () => {
     setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
     const currentNumericFilter = currentNumericValues.column;
@@ -42,8 +68,8 @@ function Filter() {
   const removeAllNumericFiltersClickHandler = () => {
     setFilterByNumericValues([]);
     setFilteredData(data);
-    setAvailableOptions(AVAILABLE_OPTIONS_ARRAY);
-  };
+    setAvailableOptions(AVAILABLE_OPTIONS);
+  }; */
   return (
     <section className="App-filter-section">
       <h2>Search your Planet</h2>
@@ -79,7 +105,6 @@ function Filter() {
             });
           } }
           data-testid="column-filter"
-          defaultValue={ availableOptions[0] }
           className="columnFilterSelect"
         >
           {availableOptions.map((availableOption, index) => (
@@ -135,7 +160,9 @@ function Filter() {
               >
                 <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
                 <button
-                  onClick={ (event) => removeNumericFilterClickHandler(event.target.value) }
+                  onClick={ (event) => (
+                    removeNumericFilterClickHandler(event.target.value)
+                  ) }
                   className="removeNumericFilterBtn"
                   value={ obj.column }
                   type="button"
