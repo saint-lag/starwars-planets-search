@@ -31,6 +31,11 @@ function Filter() {
       (availableOption) => availableOption !== currentNumericFilter,
     );
     setAvailableOptions(newState);
+    setCurrentNumericValues({
+      column: newState[0] ? newState[0] : '',
+      comparison: 'maior que',
+      value: 0,
+    });
   };
   const removeNumericFilterClickHandler = (option) => {
     const newState = filterByNumericValues.filter(
@@ -96,7 +101,6 @@ function Filter() {
           defaultValue={ availableOptions[0] }
           styles={ REACT_SELECT_STYLES }
         /> */}
-        {/* TODO: select with dinamic mapping availableOptions  */}
         <select
           onChange={ ({ target: { value } }) => {
             setCurrentNumericValues({
@@ -107,11 +111,18 @@ function Filter() {
           data-testid="column-filter"
           className="columnFilterSelect"
         >
-          {availableOptions.map((availableOption, index) => (
-            <option key={ `column-filter-option-${index}` }>
-              {availableOption}
-            </option>
-          ))}
+          {availableOptions
+            && (availableOptions.length !== 1
+              ? availableOptions.map((availableOption, index) => (
+                <option key={ `column-filter-option-${index}` }>
+                  {availableOption}
+                </option>
+              ))
+              : (
+                <option>
+                  {availableOptions[0]}
+                </option>
+              ))}
         </select>
         <label htmlFor="comparison-filter">
           Operator
@@ -135,6 +146,7 @@ function Filter() {
             value: target.value,
           }) }
           data-testid="value-filter"
+          defaultValue={ 0 }
         />
         <button
           onClick={ () => numericValuesClickHandler() }

@@ -11,7 +11,7 @@ function Provider({ children }) {
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([]);
   const [currentNumericValues, setCurrentNumericValues] = useState({
-    column: 'population', comparison: 'maior que', value: '',
+    column: 'population', comparison: 'maior que', value: 0,
   });
   const [columnSort, setColumnSort] = useState({
     order: { column: 'population', sort: 'ASC' },
@@ -31,7 +31,7 @@ function Provider({ children }) {
     setCurrentNumericValues,
     columnSort,
     setColumnSort,
-    btnDisabled: (filters) => !filters.every((filter) => filter.length > 0),
+    btnDisabled: (filters) => !filters.every((filter) => String(filter).length > 0),
   };
 
   useEffect(() => {
