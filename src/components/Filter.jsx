@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-// TODO: Separete function from this Component File to utils file
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { AVAILABLE_OPTIONS_ARRAY } from '../data';
@@ -55,28 +53,6 @@ function Filter() {
     setFilteredData(data);
     setAvailableOptions(AVAILABLE_OPTIONS_ARRAY);
   };
-
-  // React-select:
-  // const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS);
-  /*
-  const numericValuesClickHandler = () => {
-    setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
-    const currentNumericFilter = currentNumericValues.column;
-    const newState = availableOptions
-      .filter((availableOption) => availableOption.value !== currentNumericFilter);
-    setAvailableOptions(newState);
-  };
-  const removeNumericFilterClickHandler = (option) => {
-    const newState = filterByNumericValues.filter((obj) => obj.column !== option);
-    setFilteredData(data);
-    setFilterByNumericValues(newState);
-    setAvailableOptions([...availableOptions, { value: option, label: option }]);
-  };
-  const removeAllNumericFiltersClickHandler = () => {
-    setFilterByNumericValues([]);
-    setFilteredData(data);
-    setAvailableOptions(AVAILABLE_OPTIONS);
-  }; */
   return (
     <section className="App-filter-section">
       <h2>Search your Planet</h2>
