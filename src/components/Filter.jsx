@@ -169,6 +169,7 @@ function Filter() {
               <div
                 key={ index }
                 className="numericValueFilterAndDeleteBtnContainer"
+                data-testid="filter"
               >
                 <span>{`${obj.column} ${obj.comparison} ${obj.value}`}</span>
                 <button
@@ -186,6 +187,7 @@ function Filter() {
             <button
               type="button"
               onClick={ () => removeAllNumericFiltersClickHandler() }
+              data-testid="button-remove-filters"
             >
               REMOVE ALL
             </button>
