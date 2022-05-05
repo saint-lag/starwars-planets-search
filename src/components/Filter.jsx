@@ -1,3 +1,5 @@
+/* eslint-disable max-lines */
+// TODO: Separete function from this Component File to utils file
 import React, { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { AVAILABLE_OPTIONS_ARRAY } from '../data';
