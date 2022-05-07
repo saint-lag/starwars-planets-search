@@ -22,7 +22,8 @@ function Filter() {
   // Not React-select:
   const [availableOptions, setAvailableOptions] = useState(AVAILABLE_OPTIONS_ARRAY);
   const [currentColumnSort, setCurrentColumnSort] = useState({
-    order: { column: 'population', sort: 'ASC' } });
+    order: { column: 'population', sort: 'ASC' },
+  });
 
   const numericValuesClickHandler = () => {
     setFilterByNumericValues([...filterByNumericValues, currentNumericValues]);
@@ -197,7 +198,7 @@ function Filter() {
             ascendente
             <input
               id="column-sort-asc"
-              data-testid="column-sort-asc"
+              data-testid="column-sort-input-asc"
               type="radio"
               value="ASC"
               name="column-sort-radio"
@@ -208,7 +209,7 @@ function Filter() {
             descendente
             <input
               id="column-sort-desc"
-              data-testid="column-sort-desc"
+              data-testid="column-sort-input-desc"
               type="radio"
               value="DESC"
               name="column-sort-radio"

@@ -93,7 +93,33 @@ function Provider({ children }) {
   }, [filterByNumericValues]);
 
   useEffect(() => {
-    console.log(columnSort);
+    const handleColumnSort = () => {
+      const COLUMN = columnSort.order.column;
+      const SORT = columnSort.order.sort;
+      const sortedPlanets = () => {
+        const END = -1;
+        switch (SORT) {
+        case 'ASC':
+          return data
+            .sort((a, b) => {
+              if (Number(a[COLUMN]) > Number(b[COLUMN])) return 1;
+              if (Number(a[COLUMN]) < Number(b[COLUMN])) return END;
+              return 0;
+            });
+        case 'DESC':
+          return data
+            .sort((a, b) => {
+              if (Number(a[COLUMN]) > Number(b[COLUMN])) return END;
+              if (Number(a[COLUMN]) < Number(b[COLUMN])) return 1;
+              return 0;
+            });
+        default:
+          return false;
+        }
+      };
+      setFilteredData(sortedPlanets());
+    };
+    handleColumnSort();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [columnSort]);
 

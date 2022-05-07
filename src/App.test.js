@@ -681,7 +681,7 @@ describe('6 - Apague um filtro de valor numérico ao clicar no ícone de X de um
   });
 });
 
-describe('7 - Ordene as colunas de forma ascendente ou descendente', () => {
+describe.only('7 - Ordene as colunas de forma ascendente ou descendente', () => {
   beforeAll(mockFetch);
   beforeEach(cleanup);
 
