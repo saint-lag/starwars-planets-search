@@ -13,9 +13,32 @@ function Provider({ children }) {
   const [currentNumericValues, setCurrentNumericValues] = useState({
     column: 'population', comparison: 'maior que', value: 0,
   });
-  const [columnSort, setColumnSort] = useState({
-    order: { column: 'population', sort: 'ASC' },
-  });
+  const handleColumnSort = (columnSort) => {
+    const COLUMN = columnSort.order.column;
+    const SORT = columnSort.order.sort;
+    const END = -1;
+    const desc = () => data.sort((a, b) => {
+      if (Number(a[COLUMN]) > Number(b[COLUMN])) return 1;
+      if (Number(a[COLUMN]) < Number(b[COLUMN])) return END;
+      return 0;
+    });
+    const asc = () => data.sort((a, b) => {
+      if (Number(a[COLUMN]) > Number(b[COLUMN])) return END;
+      if (Number(a[COLUMN]) < Number(b[COLUMN])) return 1;
+      return 0;
+    });
+    const sortedPlanets = () => {
+      switch (SORT) {
+      case 'DESC':
+        return desc();
+      case 'ASC':
+        return asc();
+      default:
+        return false;
+      }
+    };
+    setFilteredData(sortedPlanets());
+  };
   const context = {
     data,
     setData,
@@ -29,9 +52,8 @@ function Provider({ children }) {
     setFilterByNumericValues,
     currentNumericValues,
     setCurrentNumericValues,
-    columnSort,
-    setColumnSort,
     btnDisabled: (filters) => !filters.every((filter) => String(filter).length > 0),
+    handleColumnSort,
   };
 
   useEffect(() => {
@@ -91,37 +113,6 @@ function Provider({ children }) {
     handleNumericValuesFilter();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterByNumericValues]);
-
-  useEffect(() => {
-    const handleColumnSort = () => {
-      const COLUMN = columnSort.order.column;
-      const SORT = columnSort.order.sort;
-      const sortedPlanets = () => {
-        const END = -1;
-        switch (SORT) {
-        case 'ASC':
-          return data
-            .sort((a, b) => {
-              if (Number(a[COLUMN]) > Number(b[COLUMN])) return 1;
-              if (Number(a[COLUMN]) < Number(b[COLUMN])) return END;
-              return 0;
-            });
-        case 'DESC':
-          return data
-            .sort((a, b) => {
-              if (Number(a[COLUMN]) > Number(b[COLUMN])) return END;
-              if (Number(a[COLUMN]) < Number(b[COLUMN])) return 1;
-              return 0;
-            });
-        default:
-          return false;
-        }
-      };
-      setFilteredData(sortedPlanets());
-    };
-    handleColumnSort();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [columnSort]);
 
   return (
     <AppContext.Provider value={ context }>
