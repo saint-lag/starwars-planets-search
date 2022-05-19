@@ -16,7 +16,9 @@ function Filter() {
     currentNumericValues,
     setCurrentNumericValues,
     btnDisabled,
-    handleColumnSort,
+    setColumnSort,
+    columnSortClickHandler,
+    filterByColumnSort,
   } = useContext(AppContext);
 
   // Not React-select:
@@ -218,7 +220,7 @@ function Filter() {
           <button
             type="submit"
             data-testid="column-sort-button"
-            onClick={ () => handleColumnSort(currentColumnSort) }
+            onClick={ () => columnSortClickHandler(currentColumnSort) }
           >
             ordenar
           </button>
