@@ -16,9 +16,7 @@ function Filter() {
     currentNumericValues,
     setCurrentNumericValues,
     btnDisabled,
-    setColumnSort,
     columnSortClickHandler,
-    filterByColumnSort,
   } = useContext(AppContext);
 
   // Not React-select:

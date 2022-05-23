@@ -16,28 +16,32 @@ function Provider({ children }) {
   const [columnSort, setColumnSort] = useState(
     { order: { column: 'population', sort: 'ASC' } },
   );
+  const asc = (COLUMN) => data.sort((a, b) => {
+    const END = -1;
+    if (b[COLUMN] === 'unknown') return END;
+    if (Number(a[COLUMN]) > Number(b[COLUMN])) return 1;
+    if (Number(a[COLUMN]) < Number(b[COLUMN])) return END;
+    return 0;
+  });
+
+  const desc = (COLUMN) => data.sort((a, b) => {
+    const END = -1;
+    if (b[COLUMN] === 'unknown') return END;
+    if (Number(a[COLUMN]) > Number(b[COLUMN])) return END;
+    if (Number(a[COLUMN]) < Number(b[COLUMN])) return 1;
+    return 0;
+  });
   const filterByColumnSort = (currentColumnSort) => {
     const COLUMN = currentColumnSort.order.column;
     const SORT = currentColumnSort.order.sort;
 
     setColumnSort(currentColumnSort);
 
-    const END = -1;
     switch (SORT) {
     case 'ASC':
-      return data
-        .sort((a, b) => {
-          if (Number(a[COLUMN]) > Number(b[COLUMN])) return 1;
-          if (Number(a[COLUMN]) < Number(b[COLUMN])) return END;
-          return 0;
-        });
+      return asc(COLUMN);
     case 'DESC':
-      return data
-        .sort((a, b) => {
-          if (Number(a[COLUMN]) > Number(b[COLUMN])) return END;
-          if (Number(a[COLUMN]) < Number(b[COLUMN])) return 1;
-          return 0;
-        });
+      return desc(COLUMN);
     default:
       return false;
     }
@@ -45,7 +49,7 @@ function Provider({ children }) {
   const columnSortClickHandler = (currentColumnSort) => {
     const result = filterByColumnSort(currentColumnSort);
     setFilteredData(result);
-  }
+  };
   const context = {
     data,
     setData,
@@ -63,6 +67,7 @@ function Provider({ children }) {
     setColumnSort,
     filterByColumnSort,
     columnSortClickHandler,
+    columnSort,
   };
 
   useEffect(() => {
@@ -85,7 +90,6 @@ function Provider({ children }) {
         });
     })();
   }, []);
-
 
   useEffect(() => {
     const handleNameFilter = () => setFilteredData(
